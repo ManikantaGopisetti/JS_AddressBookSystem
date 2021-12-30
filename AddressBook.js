@@ -1,4 +1,4 @@
-class Contact{
+class Contact {
     firstName;
     lastName;
     address;
@@ -8,18 +8,60 @@ class Contact{
     phoneNumber;
     email;
 
-    constructor(firstName,lastName,address,city,state,zip,phoneNumber,email){
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.address = address;
-        this.city = city;
-        this.state = state;
-        this.zip = zip;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
+    constructor(...params) {
+        this.firstName = params[0];
+        this.lastName = params[1];
+        this.address = params[2];
+        this.city = params[3];
+        this.state = params[4];
+        this.zip = params[5];
+        this.phoneNumber = params[6];
+        this.email = params[7];
     }
 }
 
+detailValid = (pattern, detail) => {
+    let result = pattern.test(detail);
+    if (result == false) {
+        throw detail + ' is not valid';
+    }
+    return result;
+}
+
+validContact = (...params) => {
+    if (params[0] == true && params[1] == true && params[2] == true && params[4] == true 
+        && params[5] == true && params[6] == true && params[7] == true) {
+        return true;
+    }
+    return false;
+}
+
 console.log("\n-----Welcome to Address Book-----\n");
-let contact1 = new Contact('Mani','Gopisetti','India','Ravulapalem','Andhra',533236,9876543210,'mani@gmail.com');
+
+let firstNamePattern = /^[A-Z][a-z]{2,}$/;
+let lastNamePattern = /^[A-Z][a-z]{2,}$/;
+let addressPattern = /^[A-Za-z]{4,}$/;
+let cityPattern = /^[A-Za-z]{4,}$/;
+let statePattern = /^[A-Za-z]{4,}$/;
+let zipPattern = /^[\d]{3}[\s][\d]{3}$/;
+let phoneNumberPattern = /^[\d]{2}[\s]{1}[\d]{10}$/;
+let emailPattern = /^([-+a-zA-z0-9]+([.][a-zA-z0-9]+)*)@([\w]+[.][a-zA-z]{2,}([.][a-zA-Z]{2,})?)$/;
+
+let firstName = 'Mani';
+let lastName = 'Gopisetti';
+let address = 'India';
+let city = 'Ravulapalem';
+let state = 'Andhra';
+let zip = '533 236';
+let phoneNumber = '91 9876543210';
+let email = 'mani@gmail.com';
+
+let contact1;
+if (validContact(detailValid(firstNamePattern, firstName), detailValid(lastNamePattern, lastName),
+    detailValid(addressPattern, address), detailValid(cityPattern, city), detailValid(statePattern, state),
+    detailValid(zipPattern, zip), detailValid(phoneNumberPattern, phoneNumber), detailValid(emailPattern, email))) {
+
+    contact1 = new Contact(firstName, lastName, address, city, state, zip, phoneNumber, email);
+
+}
 console.log(contact1);
